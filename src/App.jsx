@@ -64,7 +64,7 @@ export const App =  () => {
         <ul>
           {untoldJokes.map(joke =>{
             return (
-              <li className="joke-list-item" key={joke.id}>{joke.text}</li>
+              <li className="joke-list-item " key={joke.id}>{joke.text}<button id="untold-button" className="joke-switch" onClick={joke.told= true}> <i className="fa-regular fa-face-grin-squint-tears"></i></button></li>
             )
           })}
         </ul>
@@ -76,7 +76,7 @@ export const App =  () => {
         <ul>
           {toldJokes.map(joke =>{
             return (
-              <li className="joke-list-item" key={joke.id}>{joke.text}</li>
+              <li className="joke-list-item" key={joke.id}>{joke.text}<button className="joke-switch"><i className="fa-solid fa-face-grin-tongue-wink"></i></button></li>
             )
           })}
         </ul>

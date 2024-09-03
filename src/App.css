@@ -196,6 +196,9 @@ these styles and create your own styles and layout for the application.
     font-size: 0.7rem;
     flex-basis: 75%;
   }
+  .joke-switch{
+    border: none;
+  }
 
   /** Classes for the action buttons. Wrap the buttons in their own div*/
   /** The toggle class is for the buttons to mark a joke as told or untold*/
