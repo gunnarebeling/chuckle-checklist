@@ -13,7 +13,7 @@ export const App =  () => {
     getAllJokes().then(jokesArray => {
       setAllJokes(jokesArray)
     })
-  }, [])
+  }, [oneLiner])
   useEffect(() => {
     
     const filteredToldJokes = allJokes.filter(joke => {
