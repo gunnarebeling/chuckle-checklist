@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import "./App.css"
-import { getAllJokes, postNewJoke } from "./services/jokeService"
+import { changeJoke, deleteJoke, getAllJokes, postNewJoke } from "./services/jokeService"
 import stevePic from "./assets/steve.png"
 export const App =  () => {
   const [oneLiner, setOneLiner] = useState("")
@@ -9,6 +9,8 @@ export const App =  () => {
   const [toldJokes, setToldJokes] = useState([])
   const [toldCount, setToldCount] = useState(0)
   const [untoldCount, setUntoldCount] = useState(0)
+
+  
   useEffect(() => {
     getAllJokes().then(jokesArray => {
       setAllJokes(jokesArray)
@@ -64,7 +66,16 @@ export const App =  () => {
         <ul>
           {untoldJokes.map(joke =>{
             return (
-              <li className="joke-list-item " key={joke.id}>{joke.text}<button id="untold-button" className="joke-switch" onClick={joke.told= true}> <i className="fa-regular fa-face-grin-squint-tears"></i></button></li>
+              <li className="joke-list-item " key={joke.id}>{joke.text} <span className="change-joke-buttons"> <button className="delete joke-switch" onClick={() => deleteJoke(joke,allJokes,setAllJokes)}><i className="fa-solid fa-trash-can"></i></button><button id="untold-button" className="joke-switch" onClick={() => {
+                const newJoke = allJokes.map(currentJoke =>{
+                  if (currentJoke.id === joke.id) {
+                    changeJoke(currentJoke)
+                  }
+                  return currentJoke
+                }
+              )
+              setAllJokes(newJoke)
+              }}> <i className="fa-regular fa-face-grin-squint-tears"></i></button></span></li>
             )
           })}
         </ul>
@@ -76,7 +87,18 @@ export const App =  () => {
         <ul>
           {toldJokes.map(joke =>{
             return (
-              <li className="joke-list-item" key={joke.id}>{joke.text}<button className="joke-switch"><i className="fa-solid fa-face-grin-tongue-wink"></i></button></li>
+              <li className="joke-list-item" key={joke.id}>{joke.text} <span className="change-joke-buttons"><button className="delete joke-switch" onClick={() => deleteJoke(joke,allJokes,setAllJokes)}><i className="fa-solid fa-trash-can"></i></button>
+              <button className="joke-switch" onClick={() =>{
+               const newJokes = allJokes.map((currentJoke =>{
+                if (joke.id === currentJoke.id) {
+                  changeJoke(currentJoke)
+
+                  
+                }
+                return currentJoke
+               }))
+                setAllJokes(newJokes)
+              } }><i className="fa-solid fa-face-grin-tongue-wink"></i></button></span></li>
             )
           })}
         </ul>

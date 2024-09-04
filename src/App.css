@@ -196,6 +196,9 @@ these styles and create your own styles and layout for the application.
     font-size: 0.7rem;
     flex-basis: 75%;
   }
+  .change-joke-buttons{
+    display: flex;
+  }
   .joke-switch{
     border: none;
   }
@@ -225,3 +228,4 @@ these styles and create your own styles and layout for the application.
     transition: all 0.1s ease-in;
   }
 }
+
