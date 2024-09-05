@@ -2,13 +2,16 @@ import { useEffect, useState } from "react"
 import "./App.css"
 import { changeJoke, deleteJoke, getAllJokes, postNewJoke } from "./services/jokeService"
 import stevePic from "./assets/steve.png"
+import { JokesAddForm } from "./components/JokesAddForm"
+import { JokesList } from "./components/JokesList"
 export const App =  () => {
-  const [oneLiner, setOneLiner] = useState("")
+  
   const [allJokes, setAllJokes] = useState([])
   const [untoldJokes, setunToldJokes] = useState([])
   const [toldJokes, setToldJokes] = useState([])
   const [toldCount, setToldCount] = useState(0)
   const [untoldCount, setUntoldCount] = useState(0)
+  const [oneLiner, setOneLiner] = useState("")
 
   
   useEffect(() => {
@@ -47,18 +50,7 @@ export const App =  () => {
 
     </div>
     <h2 className="headers">Jokes</h2>
-    <div className="joke-add-form">
-      
-
-      <input className="joke-input" type="text" placeholder="New One Liner" value={oneLiner} onChange={(event) => {
-        setOneLiner(event.target.value)
-      }} />
-      <button className="joke-input-submit" onClick={async (event) =>{
-        await postNewJoke(oneLiner);
-        setOneLiner("")
-      }}>Submit</button>
-      
-    </div>
+      <JokesAddForm setOneLiner={setOneLiner} oneLiner={oneLiner}/>
     <div className="joke-lists-container">
       <div className="joke-list-container" id="untold-list">
         <h2 className="headers">Untold Jokes <span className="untold-count">{untoldCount}</span></h2>
@@ -66,16 +58,7 @@ export const App =  () => {
         <ul>
           {untoldJokes.map(joke =>{
             return (
-              <li className="joke-list-item " key={joke.id}>{joke.text} <span className="change-joke-buttons"> <button className="delete joke-switch" onClick={() => deleteJoke(joke,allJokes,setAllJokes)}><i className="fa-solid fa-trash-can"></i></button><button id="untold-button" className="joke-switch" onClick={() => {
-                const newJoke = allJokes.map(currentJoke =>{
-                  if (currentJoke.id === joke.id) {
-                    changeJoke(currentJoke)
-                  }
-                  return currentJoke
-                }
-              )
-              setAllJokes(newJoke)
-              }}> <i className="fa-regular fa-face-grin-squint-tears"></i></button></span></li>
+              <JokesList joke={joke} deleteJoke={deleteJoke} setAllJokes={setAllJokes} allJokes={allJokes} changeJoke={changeJoke} key={joke.id}/>
             )
           })}
         </ul>
@@ -87,27 +70,12 @@ export const App =  () => {
         <ul>
           {toldJokes.map(joke =>{
             return (
-              <li className="joke-list-item" key={joke.id}>{joke.text} <span className="change-joke-buttons"><button className="delete joke-switch" onClick={() => deleteJoke(joke,allJokes,setAllJokes)}><i className="fa-solid fa-trash-can"></i></button>
-              <button className="joke-switch" onClick={() =>{
-               const newJokes = allJokes.map((currentJoke =>{
-                if (joke.id === currentJoke.id) {
-                  changeJoke(currentJoke)
-
-                  
-                }
-                return currentJoke
-               }))
-                setAllJokes(newJokes)
-              } }><i className="fa-solid fa-face-grin-tongue-wink"></i></button></span></li>
+              <JokesList joke={joke} deleteJoke={deleteJoke} setAllJokes={setAllJokes} allJokes={allJokes} changeJoke={changeJoke} key={joke.id}/>
             )
           })}
         </ul>
-
-      </div>
-      
-
+      </div>    
     </div>
-
   </div>
   )
 }
